@@ -64,7 +64,16 @@ Route::get('/slices', [SliceController::class, 'index']);
 // ---------------------------------
 // About  Routes ------
 // ---------------------------------
+
 Route::get('/details', [AboutController::class, 'index']);
+Route::get('/custom-details', [AboutController::class, 'customData']);
+
+
+// ---------------------------------
+// CenterBranches  Routes ----------
+// ---------------------------------
+
+Route::get('/center-branches', [CenterBranchController::class, 'index']);
 
 
 // ---------------------------------
@@ -104,6 +113,7 @@ Route::controller(NewCategoryController::class)->group(function () {
 // ---------------------------------
 
 Route::get('/public-news',  [NewsController::class, 'approved']);
+Route::get('/last-news',  [NewsController::class, 'lastNews']);
 Route::get('/get-news/{news}',  [NewsController::class, 'show']);
 
 
@@ -123,6 +133,7 @@ Route::controller(ArticleCategoryController::class)->group(function () {
 // Articles  Routes ----------------
 // ---------------------------------
 
+Route::get('/article-tags',  [ArticleController::class, 'getArticleTags']);
 Route::get('/public-articles',  [ArticleController::class, 'approved']);
 Route::get('/get-article/{article}',  [ArticleController::class, 'show']);
 
@@ -426,7 +437,6 @@ Route::controller(CenterMemberController::class)->group(function () {
 // ---------------------------------
 
 Route::controller(CenterBranchController::class)->group(function () {
-    Route::get('/center-branches', 'index');
     Route::post('/create-branche', 'store');
     Route::get('/center-branches/{centerBranch}', 'show');
     Route::post('/update-branche/{centerBranch}', 'update');

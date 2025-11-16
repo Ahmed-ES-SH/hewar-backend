@@ -62,7 +62,7 @@ class NewsController extends Controller
             $articles = News::with(['category', 'tags', 'author'])
                 ->where('status', 'published')
                 ->filter($request->only(['query', 'status', 'categories']))
-                ->orderBy('order', 'desc')
+                ->orderBy('order', 'asc')
                 ->paginate(12);
 
             if ($articles->isEmpty()) {
@@ -74,6 +74,29 @@ class NewsController extends Controller
             return $this->errorResponse($e->getMessage(), 500);
         }
     }
+
+
+
+    public function lastNews()
+    {
+        try {
+
+            $articles = News::with(['category', 'tags', 'author'])
+                ->where('status', 'published')
+                ->orderBy('created_at', 'desc')
+                ->limit(10)
+                ->get();
+
+            if ($articles->isEmpty()) {
+                return $this->noContentResponse();
+            }
+
+            return $this->successResponse($articles, 200);
+        } catch (\Exception $e) {
+            return $this->errorResponse($e->getMessage(), 500);
+        }
+    }
+
 
 
     /**

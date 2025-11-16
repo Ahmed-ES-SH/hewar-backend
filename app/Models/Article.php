@@ -101,6 +101,7 @@ class Article extends Model
             $query->whereHas('category', fn($q) => $q->whereIn('category_id', $categoryIds));
         }
 
+
         return $query;
     }
 }

@@ -23,6 +23,17 @@ class ArticleController extends Controller
 
 
 
+    public function getArticleTags()
+    {
+        try {
+            $tags = DB::table('tags')->where('type', 'article')->get();
+            return $this->successResponse($tags, 200);
+        } catch (Exception $e) {
+            return $this->errorResponse($e->getMessage(), 500);
+        }
+    }
+
+
     /**
      * Display a listing of the resource.
      */
@@ -58,12 +69,26 @@ class ArticleController extends Controller
                 'query' => 'nullable|string|max:255',
                 'categories' => 'nullable|string',
                 'status' => 'nullable|in:draft,under_review,published,scheduled,rejected,archived',
+                'limit' => 'nullable|integer'
             ]);
+
+            $limit = $request->limit;
+
+            if ($limit) {
+                $articles = Article::with(['category', 'tags', 'author'])
+                    ->where('status', 'published')
+                    ->filter($request->only(['query', 'status', 'categories']))
+                    ->orderBy('order', 'asc')
+                    ->limit($limit)
+                    ->get();
+
+                return $this->successResponse($articles, 200);
+            }
 
             $articles = Article::with(['category', 'tags', 'author'])
                 ->where('status', 'published')
                 ->filter($request->only(['query', 'status', 'categories']))
-                ->orderBy('order', 'desc')
+                ->orderBy('order', 'asc')
                 ->paginate(12);
 
             if ($articles->isEmpty()) {

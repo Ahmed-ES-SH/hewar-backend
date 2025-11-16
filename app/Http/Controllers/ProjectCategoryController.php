@@ -110,10 +110,23 @@ class ProjectCategoryController extends Controller
     }
 
 
-    public function AllCategories()
+    public function AllCategories(Request $request)
     {
         try {
-            $Categories = ProjectCategory::orderBy('created_at', 'desc')->where('is_active', true)->get();
+
+            $request->validate([
+                'limit' => 'nullable'
+            ]);
+
+
+            $limit = $request->limit;
+
+            if ($limit) {
+                $Categories = ProjectCategory::orderBy('created_at', 'desc')->limit($limit)->get();
+                return $this->successResponse($Categories, 200);
+            }
+
+            $Categories = ProjectCategory::orderBy('created_at', 'desc')->get();
             if ($Categories->isEmpty()) {
                 return $this->noContentResponse();
             }

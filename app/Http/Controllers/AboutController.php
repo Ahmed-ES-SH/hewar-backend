@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UpdateAboutContentRequest;
+use App\Http\Resources\AboutResource;
 use App\Http\Services\ImageService;
 use App\Http\Traits\ApiResponse;
 use App\Models\About;
@@ -19,6 +20,15 @@ class AboutController extends Controller
     }
 
 
+    public function customData()
+    {
+        try {
+            $companyDetails = About::findOrFail(1);
+            return $this->successResponse(new AboutResource($companyDetails), 200);
+        } catch (\Exception $e) {
+            return $this->errorResponse($e->getMessage(), 500);
+        }
+    }
 
 
 

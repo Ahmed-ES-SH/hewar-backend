@@ -64,18 +64,18 @@ class ProjectController extends Controller
                 'query' => 'nullable|string|max:255',
                 'categories' => 'nullable|string',
                 'is_urgent' => 'nullable|boolean',
-                'limit' => 'nullable|integer',
+                'limit' => 'nullable',
             ]);
 
             if ($request->limit) {
-                 $projects = Project::with(['images', 'category'])
-                ->where('status', 'approved') // ✅ تقييد بالمشاريع الموافق عليها فقط
-                ->filter($request->only(['query', 'categories', 'is_urgent']))
-                ->orderBy('order', 'asc')
-                ->limit($request->limit);
-                ->get();
+                $projects = Project::with(['images', 'category'])
+                    ->where('status', 'approved') // ✅ تقييد بالمشاريع الموافق عليها فقط
+                    ->filter($request->only(['query', 'categories', 'is_urgent']))
+                    ->orderBy('order', 'asc')
+                    ->limit($request->limit)
+                    ->get();
 
-                return $tihs->successResponse($projects, 200);
+                return $this->successResponse($projects, 200);
             }
 
             $projects = Project::with(['images', 'category'])
