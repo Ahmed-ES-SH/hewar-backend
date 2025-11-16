@@ -20,7 +20,7 @@ class AboutSectionSeeder extends Seeder
                     'ar' => 'تبرعات الطعام',
                     'en' => 'Charity For Food',
                 ],
-                'color' => 'bg-teal-600',
+                'color' => '#0d9488', // bg-teal-600
                 'delay' => 0.2,
             ],
             [
@@ -29,7 +29,7 @@ class AboutSectionSeeder extends Seeder
                     'ar' => 'تبرعات المياه',
                     'en' => 'Charity For Water',
                 ],
-                'color' => 'bg-yellow-500',
+                'color' => '#f59e0b', // bg-yellow-500
                 'delay' => 0.3,
             ],
             [
@@ -38,7 +38,7 @@ class AboutSectionSeeder extends Seeder
                     'ar' => 'الدعم التعليمي',
                     'en' => 'Charity For Education',
                 ],
-                'color' => 'bg-orange-500',
+                'color' => '#f97316', // bg-orange-500
                 'delay' => 0.4,
             ],
             [
@@ -47,10 +47,11 @@ class AboutSectionSeeder extends Seeder
                     'ar' => 'الرعاية الطبية',
                     'en' => 'Charity For Medical',
                 ],
-                'color' => 'bg-teal-700',
+                'color' => '#065f46', // bg-teal-700
                 'delay' => 0.5,
             ],
         ];
+
 
         $texts = [
             'badge' => [
