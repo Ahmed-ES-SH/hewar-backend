@@ -22,9 +22,9 @@ class StoreContactMessageRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'    => 'nullable|string|max:255',          // الاسم مطلوب وبحد أقصى 255 حرفًا.
+            'name'    => 'required|string|max:255',          // الاسم مطلوب وبحد أقصى 255 حرفًا.
             'email'   => 'required|email|max:255',          // البريد الإلكتروني مطلوب ويجب أن يكون تنسيقه صحيحًا.
-            'phone_number'   => 'required|string|max:20',          // الهاتف اختياري وبحد أقصى 20 حرفًا.
+            'phone_number'   => 'nullable|string|max:20',          // الهاتف اختياري وبحد أقصى 20 حرفًا.
             'subject' => 'nullable|string|max:255',         // الموضوع اختياري وبحد أقصى 255 حرفًا.
             'message' => 'required|string',          // الرسالة مطلوبة وبحد أدنى 10 أحرف.
         ];

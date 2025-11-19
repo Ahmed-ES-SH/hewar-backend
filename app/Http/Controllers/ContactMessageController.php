@@ -6,6 +6,8 @@ use App\Http\Requests\StoreContactMessageRequest;
 use App\Http\Traits\ApiResponse;
 use App\Models\ContactMessage;
 use Illuminate\Http\Request;
+use App\Mail\ContactMessageMail;
+use Illuminate\Support\Facades\Mail;
 
 class ContactMessageController extends Controller
 {
@@ -31,17 +33,21 @@ class ContactMessageController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(StoreContactMessageRequest $request)
-    {
-        try {
-            $data = $request->validated();
-            $message = new ContactMessage();
-            $message->fill($data);
-            $message->save();
-            return $this->successResponse($message, 201);
-        } catch (\Exception $e) {
-            return $this->errorResponse($e->getMessage(), 500);
-        }
+{
+    try {
+        $data = $request->validated();
+        $message = new ContactMessage();
+        $message->fill($data);
+        $message->save();
+
+        // إرسال البريد الإلكتروني باستخدام Mailable
+        Mail::to('failloser1@gmail.com')->send(new ContactMessageMail($message->toArray()));
+
+        return $this->successResponse($message, 201);
+    } catch (\Exception $e) {
+        return $this->errorResponse($e->getMessage(), 500);
     }
+}
 
     /**
      * Display the specified resource.
